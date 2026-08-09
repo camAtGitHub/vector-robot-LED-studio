@@ -84,6 +84,10 @@ export function AboutModal() {
               <kbd>Space</kbd> play / pause
             </li>
             <li>
+              <kbd>←</kbd> / <kbd>→</kbd> scrub timeline (Shift = 100&nbsp;ms
+              steps)
+            </li>
+            <li>
               <kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd> undo /
               redo pattern edits
             </li>

@@ -36,6 +36,16 @@ No server, no robot connection required for design/preview.
 
 Favorites live in `localStorage` key `bpld.favorites.v1`.
 
+## Keyboard shortcuts
+
+| Key | Action |
+|---|---|
+| Space | Play / pause preview |
+| ← / → | Scrub timeline (±16 ms; Shift = ±100 ms) |
+| Ctrl/Cmd+Z | Undo pattern edit |
+| Ctrl/Cmd+Y (or Shift+Z) | Redo |
+| Ctrl/Cmd+S | Download project (`.bpld.json`) |
+
 ## Stack
 
-Vite + React + TypeScript. Domain (`src/domain/`) is pure TS: schema, player, triggers, presets. Pack I/O in `src/io/packFs.ts`.
+Vite + React + TypeScript SPA (no Tauri/Electron in v1). Domain (`src/domain/`) is pure TS: schema, player, triggers, presets. Pack I/O in `src/io/packFs.ts`. Preview uses `samplePattern` / `getCurrentLedColor` (robot math). Export colors are **RGBA floats 0–1**, seven JSON keys only.

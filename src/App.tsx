@@ -11,7 +11,7 @@ import { newPackFromStock } from './io';
 import './App.css';
 
 function KeyboardShortcuts() {
-  const { state, dispatch, pattern } = usePackStore();
+  const { state, dispatch, pattern, setTimeMs, timeMsRef } = usePackStore();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -26,6 +26,26 @@ function KeyboardShortcuts() {
       if (e.code === 'Space' && !editable) {
         e.preventDefault();
         dispatch({ type: 'SET_PLAYING', playing: !state.playing });
+        return;
+      }
+
+      // Arrow Left/Right scrub timeline when not in a form field
+      if (
+        !editable &&
+        (e.code === 'ArrowLeft' || e.code === 'ArrowRight') &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey
+      ) {
+        e.preventDefault();
+        const step = e.shiftKey ? 100 : 16; // ~1 frame or coarser
+        const delta = e.code === 'ArrowLeft' ? -step : step;
+        const next = Math.max(0, timeMsRef.current + delta);
+        timeMsRef.current = next;
+        setTimeMs(next);
+        if (state.playing) {
+          dispatch({ type: 'SET_PLAYING', playing: false });
+        }
         return;
       }
 
@@ -60,13 +80,19 @@ function KeyboardShortcuts() {
         return;
       }
 
-      // Silence unused when no pattern
       void pattern;
     };
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [dispatch, state.playing, state.pack, pattern]);
+  }, [
+    dispatch,
+    state.playing,
+    state.pack,
+    pattern,
+    setTimeMs,
+    timeMsRef,
+  ]);
 
   return null;
 }
