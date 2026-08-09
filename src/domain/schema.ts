@@ -19,12 +19,12 @@ export const PATTERN_KEYS = [
 export type PatternKey = (typeof PATTERN_KEYS)[number];
 
 export class SchemaError extends Error {
-  constructor(
-    message: string,
-    public readonly path?: string
-  ) {
+  readonly path?: string;
+
+  constructor(message: string, path?: string) {
     super(message);
     this.name = 'SchemaError';
+    this.path = path;
   }
 }
 
