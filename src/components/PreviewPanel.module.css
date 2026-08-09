@@ -1,0 +1,52 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  background: radial-gradient(ellipse at 50% 20%, #1a2434 0%, #0c1018 60%);
+  padding: 0.5rem 0.75rem 1rem;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.heading {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a9bb0;
+}
+
+.mode {
+  font-size: 0.85rem;
+  color: #e0e8f4;
+}
+
+.clad {
+  color: #5a6a80;
+  font-size: 0.75rem;
+  font-family: ui-monospace, monospace;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: #5a6a80;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.5rem;
+  max-width: 520px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}

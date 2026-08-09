@@ -1,0 +1,91 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0 0.25rem;
+}
+
+.stage {
+  position: relative;
+  width: min(100%, 360px);
+  aspect-ratio: 320 / 150;
+}
+
+.chassis {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+}
+
+.ledBar {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+}
+
+.ledSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.led {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #05070c;
+  border: 2px solid #3a465c;
+  transition: none;
+  /* diffuser plastic look */
+  background-image: radial-gradient(
+    circle at 35% 30%,
+    rgba(255, 255, 255, 0.22),
+    transparent 55%
+  );
+}
+
+.ledLabel {
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6a7a90;
+  font-weight: 600;
+}
+
+.systemLed {
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.6rem;
+  color: #5a6a80;
+}
+
+.systemDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2a3548;
+  border: 1px solid #4a5a70;
+  box-shadow: 0 0 4px rgba(100, 140, 200, 0.25);
+  animation: sysPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes sysPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+    box-shadow: 0 0 8px rgba(100, 160, 255, 0.45);
+  }
+}

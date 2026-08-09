@@ -1,0 +1,102 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  width: min(520px, 100%);
+  max-height: min(85vh, 640px);
+  overflow-y: auto;
+  background: #141a24;
+  border: 1px solid #3a465c;
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #2a3344;
+  position: sticky;
+  top: 0;
+  background: #141a24;
+}
+
+.head h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #e8eef8;
+}
+
+.close {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #8a9ab0;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close:hover {
+  background: #1e2838;
+  color: #e0e8f4;
+}
+
+.body {
+  padding: 0.85rem 1rem 1.25rem;
+  font-size: 0.85rem;
+  color: #b0bcc8;
+  line-height: 1.55;
+}
+
+.body h3 {
+  margin: 1rem 0 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a9bb0;
+}
+
+.body p {
+  margin: 0 0 0.5rem;
+}
+
+.body ol,
+.body ul {
+  margin: 0.25rem 0 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.body li {
+  margin-bottom: 0.3rem;
+}
+
+.body code {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.78em;
+  background: #0a0e14;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  color: #9ee0d4;
+}
+
+.body kbd {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.75em;
+  background: #1a2230;
+  border: 1px solid #3a465c;
+  border-radius: 3px;
+  padding: 0.05rem 0.3rem;
+  color: #d0dce8;
+}

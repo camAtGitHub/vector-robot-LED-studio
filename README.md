@@ -1,32 +1,41 @@
-# React + TypeScript + Vite
+# Backpack Lights Designer
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Offline web SPA for designing Vector **3-LED backpack light packs**. Preview uses the same animation math as the robot (`GetCurrentLEDcolor`). Export a robot-ready zip for `/data/data/customBackpackLights/`.
 
-Currently, two official plugins are available:
+## Quick start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm test
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+No server, no robot connection required for design/preview.
+
+## Layout
+
+- **Modes** — all 32 CladEvents (Critical / Behavior / Utility), search, copy/paste between modes
+- **Mock-up** — Front / Middle / Back LEDs driven by `samplePattern` at ~60 fps + transport + waveforms
+- **Editor** — colors (hex/RGB 0–255 UI → float 0–1 model), periods, presets, raw JSON, favorites
+- **Footer** — validation, sentinels, export readiness
+
+## Robot upload
+
+1. **Export → Robot zip** (not the `.bpld.json` project file).
+2. Place pack contents at **`/data/data/customBackpackLights/`** on the robot.
+3. Both sentinels required: `off.json` and `cubeSpinner/purple/spinner_purple_celebration.json`.
+4. Restart robot processes so the custom path is re-read.
+
+## Project vs robot export
+
+| Artifact | Purpose |
+|---|---|
+| `*.bpld.json` | Designer project (metadata + patterns) — Save project |
+| `*.zip` | Robot pack tree only — Export robot zip |
+
+Favorites live in `localStorage` key `bpld.favorites.v1`.
+
+## Stack
+
+Vite + React + TypeScript. Domain (`src/domain/`) is pure TS: schema, player, triggers, presets. Pack I/O in `src/io/packFs.ts`.
