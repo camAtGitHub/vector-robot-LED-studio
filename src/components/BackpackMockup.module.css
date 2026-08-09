@@ -2,90 +2,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem 0 0.25rem;
+  padding: 0.35rem 0 0.15rem;
 }
 
+/* Photo is large (2048×1454); keep mock-up modest in the panel. */
 .stage {
   position: relative;
-  width: min(100%, 360px);
-  aspect-ratio: 320 / 150;
+  width: min(100%, 280px);
+  aspect-ratio: 2048 / 1454;
 }
 
 .chassis {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
 }
 
-.ledBar {
+.ledLayer {
   position: absolute;
-  left: 50%;
-  top: 48%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  gap: 1.6rem;
-  align-items: center;
+  inset: 0;
+  pointer-events: none;
 }
 
-.ledSlot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
+/*
+ * LED rects from robot-LEDS.png (percent of full image).
+ * Slightly oversized vs measured white cells so overlays fully cover them.
+ */
 .led {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #05070c;
-  border: 2px solid #3a465c;
-  transition: none;
-  /* diffuser plastic look */
-  background-image: radial-gradient(
-    circle at 35% 30%,
-    rgba(255, 255, 255, 0.22),
-    transparent 55%
-  );
-}
-
-.ledLabel {
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #6a7a90;
-  font-weight: 600;
-}
-
-.systemLed {
   position: absolute;
-  right: 8%;
-  top: 12%;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.6rem;
-  color: #5a6a80;
+  width: 5.1%;
+  height: 4.9%;
+  border-radius: 18%;
+  background: #05070c;
+  border: 1px solid rgba(20, 24, 32, 0.65);
+  transition: none;
+  /* No white gradient overlay — it washed out saturated colors (esp. pink). */
+  box-sizing: border-box;
 }
 
-.systemDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #2a3548;
-  border: 1px solid #4a5a70;
-  box-shadow: 0 0 4px rgba(100, 140, 200, 0.25);
-  animation: sysPulse 2.4s ease-in-out infinite;
+/* Measured centers: Back 19.31%, Middle 24.88%, Front 30.44% · cy 49.14% */
+.ledBack {
+  left: 16.75%;
+  top: 46.7%;
 }
 
-@keyframes sysPulse {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 0.9;
-    box-shadow: 0 0 8px rgba(100, 160, 255, 0.45);
-  }
+.ledMiddle {
+  left: 22.35%;
+  top: 46.7%;
+}
+
+.ledFront {
+  left: 27.9%;
+  top: 46.7%;
 }

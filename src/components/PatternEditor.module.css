@@ -367,14 +367,4 @@
   text-align: center;
 }
 
-/* Stack period grid on narrow panels */
-@media (max-width: 1100px) {
-  .grid {
-    grid-template-columns: 2.8rem 1fr 1fr;
-  }
 
-  .gridHead:nth-child(n + 4),
-  .periodCell {
-    /* periods wrap under colors — hide heads that don't fit cleanly */
-  }
-}

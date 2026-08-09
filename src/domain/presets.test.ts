@@ -74,6 +74,13 @@ describe('presets', () => {
     expect(patternCycleMs(p)).toBe(200);
     expect(patternCycleMs(presetSolid())).toBe(2000);
   });
+
+  it('patternCycleMs includes offset so delayed LEDs appear in the timeline', () => {
+    // Chase-style: period 297, offsets 0 / 150 / 300 — back only lights after 300ms
+    const p = presetBlink([1, 0, 0, 1], 99, 198);
+    p.offset = [0, 150, 300];
+    expect(patternCycleMs(p)).toBe(297 + 300);
+  });
 });
 
 describe('themeTools', () => {

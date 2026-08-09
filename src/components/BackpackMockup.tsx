@@ -1,14 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { samplePattern, type Pattern, type Rgba8 } from '../domain';
 import { usePackStore } from '../store/packStore';
+import robotLeds from '../assets/robot-LEDS.png';
 import styles from './BackpackMockup.module.css';
 
 function cssRgb(c: Rgba8): string {
   return `rgb(${c.r}, ${c.g}, ${c.b})`;
 }
 
-function lum(c: Rgba8): number {
-  return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
+/** Peak channel 0–1 — even glow across hues (yellow vs pink), unlike luminance. */
+function peak(c: Rgba8): number {
+  return Math.max(c.r, c.g, c.b) / 255;
 }
 
 function applyColors(
@@ -19,21 +21,37 @@ function applyColors(
     const el = els[i];
     if (!el) continue;
     const c = colors[i];
-    const L = lum(c);
+    const p = peak(c);
+    const on = p > 0.02;
+
+    // Always opaque so the white photo LEDs never bleed through and wash colors.
+    el.style.opacity = '1';
+    el.style.backgroundImage = 'none';
+
+    if (!on) {
+      el.style.backgroundColor = '#05070c';
+      el.style.boxShadow = 'none';
+      continue;
+    }
+
     const color = cssRgb(c);
+    // Cap glow so high-luminance hues (yellow) don't balloon past saturated ones.
+    const blur = 5 + p * 12;
+    const spread = 1 + p * 3;
+    // Tiny same-hue highlight — not pure white, which desaturates pinks/reds.
+    const hi = `rgba(${Math.min(255, Math.round(c.r * 0.35 + 165))}, ${Math.min(255, Math.round(c.g * 0.35 + 165))}, ${Math.min(255, Math.round(c.b * 0.35 + 165))}, 0.28)`;
+
     el.style.backgroundColor = color;
-    el.style.boxShadow =
-      L < 0.02
-        ? 'none'
-        : `0 0 ${8 + L * 28}px ${2 + L * 10}px ${color},
-           0 0 ${4 + L * 12}px ${color},
-           inset 0 0 ${6 + L * 8}px rgba(255,255,255,${0.15 + L * 0.35})`;
-    el.style.opacity = String(0.35 + L * 0.65);
+    el.style.boxShadow = `0 0 ${blur}px ${spread}px ${color},
+       0 0 ${blur * 0.45}px 0 ${color},
+       inset 0 0 3px ${hi}`;
   }
 }
 
 /**
- * 3-LED backpack mock-up. Colors come only from samplePattern (player math).
+ * 3-LED backpack mock-up over the real backpack photo.
+ * Visual order left→right is Back · Middle · Front.
+ * Colors come only from samplePattern (player math).
  * rAF updates DOM styles directly — pack state is not rewritten every frame.
  */
 export function BackpackMockup() {
@@ -116,68 +134,40 @@ export function BackpackMockup() {
   return (
     <div className={styles.wrap}>
       <div className={styles.stage}>
-        <svg className={styles.chassis} viewBox="0 0 320 140" aria-hidden>
-          <defs>
-            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#2a303c" />
-              <stop offset="100%" stopColor="#141820" />
-            </linearGradient>
-          </defs>
-          <rect
-            x="40"
-            y="28"
-            width="240"
-            height="72"
-            rx="18"
-            fill="url(#bodyGrad)"
-            stroke="#3a4458"
-            strokeWidth="2"
-          />
-          <rect
-            x="70"
-            y="48"
-            width="180"
-            height="22"
-            rx="8"
-            fill="#0c1018"
-            stroke="#2a3448"
-            strokeWidth="1"
-          />
-          <ellipse
-            cx="160"
-            cy="110"
-            rx="90"
-            ry="10"
-            fill="#0a0c10"
-            opacity="0.55"
-          />
-        </svg>
+        <img
+          className={styles.chassis}
+          src={robotLeds}
+          alt="Vector backpack"
+          draggable={false}
+        />
 
+        {/*
+          LED bounds measured on robot-LEDS.png (2048×1454):
+          Back   x 347–444  y 682–747
+          Middle x 461–558  y 682–747
+          Front  x 575–672  y 682–747
+          Left = back, right = front (as on the robot).
+        */}
         <div
-          className={styles.ledBar}
+          className={styles.ledLayer}
           role="img"
-          aria-label="Backpack LEDs Front Middle Back"
+          aria-label="Backpack LEDs Back Middle Front"
         >
-          <div className={styles.ledSlot}>
-            <div ref={frontRef} className={styles.led} data-led="front" />
-            <span className={styles.ledLabel}>Front</span>
-          </div>
-          <div className={styles.ledSlot}>
-            <div ref={midRef} className={styles.led} data-led="middle" />
-            <span className={styles.ledLabel}>Middle</span>
-          </div>
-          <div className={styles.ledSlot}>
-            <div ref={backRef} className={styles.led} data-led="back" />
-            <span className={styles.ledLabel}>Back</span>
-          </div>
-        </div>
-
-        <div
-          className={styles.systemLed}
-          title="System / pairing LED — not driven by pack JSON"
-        >
-          <div className={styles.systemDot} />
-          <span>System · not in pack</span>
+          <div
+            ref={backRef}
+            className={`${styles.led} ${styles.ledBack}`}
+            data-led="back"
+          />
+          <div
+            ref={midRef}
+            className={`${styles.led} ${styles.ledMiddle}`}
+            data-led="middle"
+          />
+          <div
+            ref={frontRef}
+            className={`${styles.led} ${styles.ledFront}`}
+            data-led="front"
+          />
         </div>
       </div>
     </div>

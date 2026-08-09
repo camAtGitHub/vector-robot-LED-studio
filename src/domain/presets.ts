@@ -111,7 +111,14 @@ export function presetSingleLed(
   };
 }
 
-/** Max cycle length across non-solid LEDs (for timeline scrub). */
+/**
+ * Timeline / scrub window for a pattern.
+ * Per LED, firmware waits `offset` then loops over
+ * (transOn + on + transOff + off). The window must cover each LED’s
+ * offset plus one full period — otherwise a delayed LED (e.g. back with
+ * offset 300 and period 297) never appears “on” in the waveform strip
+ * even though the mock-up shows it after continuous time advances.
+ */
 export function patternCycleMs(pattern: Pattern): number {
   let max = 0;
   for (let i = 0; i < LED_COUNT; i++) {
@@ -122,7 +129,9 @@ export function patternCycleMs(pattern: Pattern): number {
       pattern.onPeriod_ms[i] +
       pattern.transitionOffPeriod_ms[i] +
       pattern.offPeriod_ms[i];
-    if (total > max) max = total;
+    const offset = pattern.offset[i] ?? 0;
+    const span = total + offset;
+    if (span > max) max = span;
   }
   // Solid-only patterns: still show a short timeline window
   return max > 0 ? max : 2000;
