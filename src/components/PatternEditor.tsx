@@ -4,6 +4,7 @@ import {
   applyPreset,
   clonePattern,
   hexToRgba,
+  libraryPresets,
   parsePatternJson,
   rgbaToHex,
   rgbaToRgb255,
@@ -179,8 +180,9 @@ export function PatternEditor() {
         {(
           [
             ['fields', 'Fields'],
-            ['json', 'Raw JSON'],
+            ['presets', 'Presets'],
             ['favorites', 'Favorites'],
+            ['json', 'Raw JSON'],
           ] as const
         ).map(([id, label]) => (
           <button
@@ -301,6 +303,35 @@ export function PatternEditor() {
               Reset
             </button>
           </div>
+        </div>
+      )}
+
+      {state.editorTab === 'presets' && (
+        <div className={styles.body}>
+          <p className={styles.presetHint}>
+            Built-in recipes — always here, not deletable. Star a result to keep
+            your own color combo.
+          </p>
+          <ul className={styles.favList}>
+            {libraryPresets().map((p) => (
+              <li key={p.id}>
+                <button
+                  type="button"
+                  className={styles.favApply}
+                  onClick={() => {
+                    updatePattern(clonePattern(p.pattern));
+                    dispatch({
+                      type: 'SET_STATUS',
+                      status: `Applied preset “${p.name}”`,
+                    });
+                  }}
+                  title="Apply to selected mode"
+                >
+                  {p.name}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

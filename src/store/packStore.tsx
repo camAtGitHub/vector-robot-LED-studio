@@ -45,16 +45,19 @@ export interface PackState {
   busy: boolean;
   status: string;
   aboutOpen: boolean;
-  editorTab: 'fields' | 'json' | 'favorites';
+  renameOpen: boolean;
+  editorTab: 'fields' | 'presets' | 'favorites' | 'json';
 }
 
 type Action =
   | { type: 'SET_BUSY'; busy: boolean }
   | { type: 'SET_STATUS'; status: string }
   | { type: 'SET_ABOUT'; open: boolean }
+  | { type: 'SET_RENAME'; open: boolean }
   | { type: 'SET_EDITOR_TAB'; tab: PackState['editorTab'] }
   | { type: 'APPLY_IMPORT'; result: ImportResult; status: string }
   | { type: 'SET_PACK'; pack: Pack; report?: PackValidationReport | null }
+  | { type: 'SET_PACK_NAME'; name: string }
   | { type: 'SELECT_MODE'; cladEvent: string }
   | { type: 'SET_LINK_LEDS'; link: boolean }
   | { type: 'SET_PLAYING'; playing: boolean }
@@ -100,6 +103,7 @@ function initialState(): PackState {
     busy: false,
     status: 'Load a pack to begin',
     aboutOpen: false,
+    renameOpen: false,
     editorTab: 'fields',
   };
 }
@@ -112,6 +116,8 @@ function reducer(state: PackState, action: Action): PackState {
       return { ...state, status: action.status };
     case 'SET_ABOUT':
       return { ...state, aboutOpen: action.open };
+    case 'SET_RENAME':
+      return { ...state, renameOpen: action.open };
     case 'SET_EDITOR_TAB':
       return { ...state, editorTab: action.tab };
     case 'APPLY_IMPORT': {
@@ -140,6 +146,15 @@ function reducer(state: PackState, action: Action): PackState {
     case 'SET_PACK': {
       const report = action.report ?? revalidate(action.pack);
       return { ...state, pack: action.pack, report };
+    }
+    case 'SET_PACK_NAME': {
+      if (!state.pack) return state;
+      const name = action.name.trim();
+      if (!name) return state;
+      return {
+        ...state,
+        pack: { ...state.pack, name, dirty: true },
+      };
     }
     case 'SELECT_MODE':
       return {

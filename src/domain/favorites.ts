@@ -1,15 +1,11 @@
 /**
- * Favorites library — localStorage key bpld.favorites.v1
+ * User favorites — localStorage key bpld.favorites.v1
+ * Built-in recipes live in libraryPresets.ts and are not stored here.
  */
 
-import type { Pattern, Rgba } from './types';
+import type { Pattern } from './types';
 import { parsePattern, SchemaError } from './schema';
-import {
-  clonePattern,
-  presetBlink,
-  presetChase,
-  presetSolid,
-} from './presets';
+import { clonePattern } from './presets';
 
 export const FAVORITES_STORAGE_KEY = 'bpld.favorites.v1';
 
@@ -28,54 +24,9 @@ function uid(): string {
   return `fav_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-/** Stock-inspired seeds (values from stock/example, not invented fields). */
-export function defaultSeedFavorites(): Favorite[] {
-  const cyan: Rgba = [0, 0.85, 1, 1];
-  const green: Rgba = [0, 0.5, 0, 1];
-  const red: Rgba = [1, 0, 0, 1];
-  // Green charge chase — same timing shape as stock charging offsets
-  const greenChase = presetChase(green, 600, 600, 300);
-  greenChase.onPeriod_ms = [600, 1200, 1800];
-  greenChase.offPeriod_ms = [1200, 600, 0];
-  greenChase.offset = [1200, 600, 0];
-
-  // Red rear blink — stock badCharger style (only back LED)
-  const redRear = presetBlink(red, 600, 600);
-  redRear.onColors = [
-    [0, 0, 0, 1],
-    [0, 0, 0, 1],
-    [1, 0, 0, 1],
-  ];
-  redRear.offColors = [
-    [0, 0, 0, 1],
-    [0, 0, 0, 1],
-    [0, 0, 0, 1],
-  ];
-  redRear.onPeriod_ms = [0, 0, 600];
-  redRear.offPeriod_ms = [0, 0, 600];
-  redRear.transitionOnPeriod_ms = [0, 0, 300];
-  redRear.transitionOffPeriod_ms = [0, 0, 300];
-
-  return [
-    {
-      id: 'seed-solid-cyan',
-      name: 'Solid cyan',
-      pattern: presetSolid(cyan),
-      createdAt: '2020-01-01T00:00:00.000Z',
-    },
-    {
-      id: 'seed-green-charge-chase',
-      name: 'Green charge chase',
-      pattern: greenChase,
-      createdAt: '2020-01-01T00:00:00.000Z',
-    },
-    {
-      id: 'seed-red-rear-blink',
-      name: 'Red rear blink',
-      pattern: redRear,
-      createdAt: '2020-01-01T00:00:00.000Z',
-    },
-  ];
+/** Former seed ids and built-in preset ids are not user favorites. */
+export function isUserFavoriteId(id: string): boolean {
+  return !id.startsWith('seed-') && !id.startsWith('preset-');
 }
 
 function parseFavorite(raw: unknown): Favorite | null {
@@ -96,35 +47,26 @@ function parseFavorite(raw: unknown): Favorite | null {
   }
 }
 
-/** Load favorites from localStorage; seed defaults if empty / missing. */
+/** Load user favorites only. Empty until the user stars something. */
 export function loadFavorites(): Favorite[] {
   if (!isBrowser()) {
-    return defaultSeedFavorites();
+    return [];
   }
   try {
     const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
-    if (!raw) {
-      const seeds = defaultSeedFavorites();
-      saveFavorites(seeds);
-      return seeds;
-    }
+    if (!raw) return [];
     const data = JSON.parse(raw) as unknown;
-    if (!Array.isArray(data)) {
-      const seeds = defaultSeedFavorites();
-      saveFavorites(seeds);
-      return seeds;
-    }
-    const list = data
+    if (!Array.isArray(data)) return [];
+    const parsed = data
       .map(parseFavorite)
       .filter((f): f is Favorite => f !== null);
-    if (list.length === 0) {
-      const seeds = defaultSeedFavorites();
-      saveFavorites(seeds);
-      return seeds;
+    const list = parsed.filter((f) => isUserFavoriteId(f.id));
+    if (list.length !== parsed.length) {
+      saveFavorites(list);
     }
     return list;
   } catch {
-    return defaultSeedFavorites();
+    return [];
   }
 }
 

@@ -5,9 +5,10 @@ import { PreviewPanel } from './components/PreviewPanel';
 import { PatternEditor } from './components/PatternEditor';
 import { ValidationBar } from './components/ValidationBar';
 import { AboutModal } from './components/AboutModal';
+import { RenameProjectModal } from './components/RenameProjectModal';
 import { PackStoreProvider, usePackStore } from './store/packStore';
 import { downloadProject } from './domain';
-import { newPackFromStock } from './io';
+import { loadBundledPack } from './io';
 import './App.css';
 
 function KeyboardShortcuts() {
@@ -103,7 +104,7 @@ function BootstrapPack() {
   useEffect(() => {
     if (state.pack) return;
     void runBusy(async () => {
-      applyImport(await newPackFromStock('My pack'), 'New from stock');
+      applyImport(await loadBundledPack('stock'), 'Stock Anki');
     });
     // once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,6 +126,7 @@ function Shell() {
       </div>
       <ValidationBar />
       <AboutModal />
+      <RenameProjectModal />
     </div>
   );
 }

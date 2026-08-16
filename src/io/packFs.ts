@@ -560,13 +560,6 @@ function structuredClonePattern(pattern: Pattern): Pattern {
   };
 }
 
-/**
- * Clone an imported pack into a new editable pack ("New pack from stock").
- */
-export function clonePackAsEditable(source: Pack, name?: string): Pack {
-  return createPack(name ?? `${source.name} (copy)`, source.patterns, true);
-}
-
 export type BundledPackId = 'stock' | 'wireos' | 'example-cyan';
 
 /**
@@ -607,17 +600,6 @@ export async function loadBundledPack(
   return importPackFromFiles(entries, {
     name: options?.name ?? names[packId],
   });
-}
-
-/**
- * "New pack from stock": load bundled stock and mark dirty for editing.
- */
-export async function newPackFromStock(
-  name = 'My pack'
-): Promise<ImportResult> {
-  const result = await loadBundledPack('stock', { name: 'Stock Anki' });
-  result.pack = clonePackAsEditable(result.pack, name);
-  return result;
 }
 
 /** True if both robot sentinels are present in the pack. */

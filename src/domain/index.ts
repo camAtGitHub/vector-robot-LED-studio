@@ -4,6 +4,7 @@ export * from './player';
 export * from './triggers';
 export * from './colors';
 export * from './presets';
+export * from './libraryPresets';
 export * from './themeTools';
 export * from './favorites';
 export * from './project';

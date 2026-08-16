@@ -10,7 +10,7 @@ import {
   presetSolid,
 } from './presets';
 import { brightnessPattern, hueShiftPattern } from './themeTools';
-import { packToProject, projectToPack } from './project';
+import { packToProject, parseProjectJson, projectToPack, stringifyProject } from './project';
 
 describe('presets', () => {
   it('presetSolid is constant color via player', () => {
@@ -113,5 +113,28 @@ describe('project', () => {
     const restored = projectToPack(project);
     expect(restored.name).toBe('Test neon');
     expect(restored.patterns['charging.json'].offset).toEqual(pattern.offset);
+  });
+
+  it('packToProject includes a changed pack name', () => {
+    const pack = {
+      name: 'Renamed backpack',
+      patterns: { 'charging.json': presetChase() },
+      dirty: true,
+    };
+    const project = packToProject(pack, '2024-01-01T00:00:00.000Z');
+    expect(project.name).toBe('Renamed backpack');
+  });
+
+  it('parseProjectJson / projectToPack restores a changed pack name', () => {
+    const pack = {
+      name: 'Renamed backpack',
+      patterns: { 'charging.json': presetChase() },
+      dirty: true,
+    };
+    const project = packToProject(pack, '2024-01-01T00:00:00.000Z');
+    expect(projectToPack(project).name).toBe('Renamed backpack');
+    expect(parseProjectJson(stringifyProject(project)).name).toBe(
+      'Renamed backpack'
+    );
   });
 });

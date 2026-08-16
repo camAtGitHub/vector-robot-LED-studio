@@ -305,6 +305,13 @@
   cursor: pointer;
 }
 
+.presetHint {
+  margin: 0 0 0.65rem;
+  font-size: 0.75rem;
+  color: #8a9ab0;
+  line-height: 1.4;
+}
+
 .favAdd {
   display: flex;
   flex-direction: column;

@@ -5,7 +5,6 @@ import {
   importPackFromBrowserFiles,
   importPackFromZip,
   loadBundledPack,
-  newPackFromStock,
   validatePack,
 } from '../io';
 import {
@@ -35,28 +34,19 @@ export function Header() {
         <div>
           <h1 className={styles.title}>Backpack Lights Designer</h1>
           <p className={styles.subtitle}>
-            Vector 3-LED ops lab · robot math preview
+            {pack
+              ? pack.name
+              : 'Vector 3-LED ops lab · robot math preview'}
           </p>
         </div>
       </div>
 
       <div className={styles.actions}>
-        <div className={styles.menu}>
+        <div className={`${styles.menu} ${styles.menuStart}`}>
           <button type="button" className={styles.btn} disabled={busy}>
             Import ▾
           </button>
           <div className={styles.dropdown}>
-            <button
-              type="button"
-              disabled={busy}
-              onClick={() =>
-                runBusy(async () => {
-                  applyImport(await newPackFromStock('My pack'), 'New from stock');
-                })
-              }
-            >
-              New from stock
-            </button>
             <button
               type="button"
               disabled={busy}
@@ -102,7 +92,7 @@ export function Header() {
           </div>
         </div>
 
-        <div className={styles.menu}>
+        <div className={`${styles.menu} ${styles.menuStart}`}>
           <button type="button" className={styles.btn} disabled={busy || !pack}>
             Export ▾
           </button>
@@ -147,25 +137,42 @@ export function Header() {
           </div>
         </div>
 
-        <button
-          type="button"
-          className={styles.btnPrimary}
-          disabled={busy || !pack}
-          onClick={() => {
-            if (!pack) return;
-            downloadProject(pack);
-            dispatch({
-              type: 'SET_STATUS',
-              status: 'Project saved (download)',
-            });
-          }}
-        >
-          Save project
-        </button>
+        <div className={`${styles.menu} ${styles.menuEnd}`}>
+          <button
+            type="button"
+            className={styles.btnPrimary}
+            disabled={busy || !pack}
+          >
+            Save<span className={styles.saveExtra}> project</span> ▾
+          </button>
+          <div className={styles.dropdown}>
+            <button
+              type="button"
+              disabled={busy || !pack}
+              onClick={() => dispatch({ type: 'SET_RENAME', open: true })}
+            >
+              Rename project
+            </button>
+            <button
+              type="button"
+              disabled={busy || !pack}
+              onClick={() => {
+                if (!pack) return;
+                downloadProject(pack);
+                dispatch({
+                  type: 'SET_STATUS',
+                  status: 'Project saved (download)',
+                });
+              }}
+            >
+              Save project
+            </button>
+          </div>
+        </div>
 
-        <div className={styles.menu}>
+        <div className={`${styles.menu} ${styles.menuEnd}`}>
           <button type="button" className={styles.btn} disabled={busy || !pack}>
-            Theme ▾
+            Adjust ▾
           </button>
           <div className={styles.dropdown}>
             <button
