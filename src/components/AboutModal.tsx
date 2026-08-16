@@ -18,7 +18,7 @@ export function AboutModal() {
         onClick={(e) => e.stopPropagation()}
       >
         <header className={styles.head}>
-          <h2 id="about-title">About · Backpack Lights Designer</h2>
+          <h2 id="about-title">About · Vector Robot LED Backpack Studio</h2>
           <button
             type="button"
             className={styles.close}
@@ -30,51 +30,52 @@ export function AboutModal() {
         </header>
         <div className={styles.body}>
           <p>
-            Offline designer for Vector’s <strong>3 backpack LEDs</strong>{' '}
-            (Front / Middle / Back). Preview uses the same segment math as the
-            robot firmware (<code>GetCurrentLEDcolor</code>).
+            Offline Studio for Vector’s <strong>3 backpack LEDs</strong> (Front
+            / Middle / Back).
+          </p>
+          <p>
+            Based on firmware <code>GetCurrentLEDcolor</code> function.
           </p>
 
           <h3>Upload to robot</h3>
           <ol>
             <li>
-              Export a <strong>robot zip</strong> (not the .bpld.json project).
+              Export a robot zip (not the .bpld.json project) and unzip the
+              files locally.
             </li>
             <li>
-              Unpack so files land at{' '}
-              <code>/data/data/customBackpackLights/</code> on the robot
-              (contents of the pack, not a nested folder name twice).
+              SCP files to <code>/data/data/customBackpackLights/</code>.
             </li>
             <li>
-              Both sentinels must exist:{' '}
-              <code>off.json</code> and{' '}
+              Ensure that json files land at{' '}
+              <code>/data/data/customBackpackLights/*.json</code> and{' '}
+              <code>
+                /data/data/customBackpackLights/cubeSpinner/red/*.json
+              </code>{' '}
+              etc.
+            </li>
+            <li>
+              Required files (sentinels) must exist: <code>off.json</code> and{' '}
               <code>cubeSpinner/purple/spinner_purple_celebration.json</code>.
             </li>
-            <li>
-              Restart the robot processes so the custom path is re-read
-              (hot-reload is not reliable).
-            </li>
+            <li>Reboot Vector.</li>
           </ol>
 
-          <h3>Honesty notes</h3>
+          <h3>Other</h3>
           <ul>
             <li>
-              Preview colors equal <code>samplePattern</code> output — not
-              independent CSS animations.
+              Real LED diffusion may look slightly different on Vector.
             </li>
             <li>
-              Real LED gamut / diffuser may look slightly different on hardware.
-            </li>
-            <li>
-              The 4th <strong>system / pairing</strong> light is decorative in
-              the mock-up and is <em>not</em> part of pack JSON.
+              The 4th system / pairing light is decorative in the mock-up and
+              is not configurable via Backpack Studio.
             </li>
             <li>
               Only 3 LEDs are edited. Cube lights use a different format.
             </li>
             <li>
-              Some firmware builds may shadow the custom pack path — if lights
-              don’t change after upload, check robot loader notes separately.
+              Not all Vector firmwares support custom backpack lights being
+              loaded.
             </li>
           </ul>
 

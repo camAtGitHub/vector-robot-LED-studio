@@ -32,7 +32,7 @@ export function Header() {
           ▣
         </span>
         <div>
-          <h1 className={styles.title}>Backpack Lights Designer</h1>
+          <h1 className={styles.title}>Vector Robot LED Backpack Studio</h1>
           <p className={styles.subtitle}>
             {pack
               ? pack.name
