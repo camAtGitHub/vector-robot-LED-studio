@@ -111,30 +111,108 @@ export function presetSingleLed(
   };
 }
 
-/**
- * Timeline / scrub window for a pattern.
- * Per LED, firmware waits `offset` then loops over
- * (transOn + on + transOff + off). The window must cover each LED’s
- * offset plus one full period — otherwise a delayed LED (e.g. back with
- * offset 300 and period 297) never appears “on” in the waveform strip
- * even though the mock-up shows it after continuous time advances.
- */
-export function patternCycleMs(pattern: Pattern): number {
+/** Minimum post-offset time shown on the strip so a short loop is visible. */
+const MIN_LOOP_VISIBLE_MS = 2000;
+const SOLID_WINDOW_MS = 2000;
+const LCM_CAP_MS = 30_000;
+
+function gcd(a: number, b: number): number {
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+  while (y) {
+    const t = y;
+    y = x % y;
+    x = t;
+  }
+  return x || 1;
+}
+
+function lcm(a: number, b: number): number {
+  if (a === 0 || b === 0) return Math.max(a, b);
+  return Math.abs((a / gcd(a, b)) * b);
+}
+
+/** Per-LED firmware loop length, or null if solid / zero (no modulo). */
+function ledLoopMs(pattern: Pattern, i: number): number | null {
+  if (pattern.onPeriod_ms[i] === SOLID_ON_PERIOD) return null;
+  const total =
+    pattern.transitionOnPeriod_ms[i] +
+    pattern.onPeriod_ms[i] +
+    pattern.transitionOffPeriod_ms[i] +
+    pattern.offPeriod_ms[i];
+  return total > 0 ? total : null;
+}
+
+/** Repeating period after offset: max(transOn + on + transOff + off). */
+export function patternPeriodMs(pattern: Pattern): number {
   let max = 0;
   for (let i = 0; i < LED_COUNT; i++) {
-    const on = pattern.onPeriod_ms[i];
-    if (on === SOLID_ON_PERIOD) continue;
-    const total =
-      pattern.transitionOnPeriod_ms[i] +
-      pattern.onPeriod_ms[i] +
-      pattern.transitionOffPeriod_ms[i] +
-      pattern.offPeriod_ms[i];
-    const offset = pattern.offset[i] ?? 0;
-    const span = total + offset;
-    if (span > max) max = span;
+    const loop = ledLoopMs(pattern, i);
+    if (loop != null && loop > max) max = loop;
   }
-  // Solid-only patterns: still show a short timeline window
-  return max > 0 ? max : 2000;
+  return max;
+}
+
+/**
+ * One-shot wait before any LED enters its loop (firmware applies offset once).
+ * Negative offsets start already inside the cycle, so they do not extend intro.
+ */
+export function patternIntroMs(pattern: Pattern): number {
+  let max = 0;
+  for (let i = 0; i < LED_COUNT; i++) {
+    if (ledLoopMs(pattern, i) == null) continue;
+    const offset = pattern.offset[i] ?? 0;
+    if (offset > max) max = offset;
+  }
+  return max;
+}
+
+/** Combined loop length used to wrap the playhead without restarting offset. */
+function patternLoopUnitMs(pattern: Pattern): number {
+  const periods: number[] = [];
+  for (let i = 0; i < LED_COUNT; i++) {
+    const loop = ledLoopMs(pattern, i);
+    if (loop != null) periods.push(loop);
+  }
+  if (periods.length === 0) return 0;
+  let unit = periods[0];
+  for (let i = 1; i < periods.length; i++) {
+    const next = lcm(unit, periods[i]);
+    if (next > LCM_CAP_MS) return Math.max(...periods);
+    unit = next;
+  }
+  return unit;
+}
+
+/**
+ * Timeline strip length: one-shot offset wait, then enough loop repeats
+ * that the robot’s ongoing flash is visible (not a single first-cycle blip).
+ */
+export function patternWindowMs(pattern: Pattern): number {
+  const intro = patternIntroMs(pattern);
+  const unit = patternLoopUnitMs(pattern);
+  if (unit <= 0) return SOLID_WINDOW_MS;
+  const repeats = Math.max(1, Math.ceil(MIN_LOOP_VISIBLE_MS / unit));
+  return intro + unit * repeats;
+}
+
+/** @deprecated Use patternWindowMs — kept as the strip/scrub window. */
+export function patternCycleMs(pattern: Pattern): number {
+  return patternWindowMs(pattern);
+}
+
+/**
+ * Map continuous robot time onto the timeline strip.
+ * After the offset wait, wraps only the looping tail — never restarts intro.
+ */
+export function previewPlayheadMs(timeMs: number, pattern: Pattern): number {
+  const t = Math.max(0, timeMs);
+  const intro = patternIntroMs(pattern);
+  const window = patternWindowMs(pattern);
+  if (t <= intro) return t;
+  const tail = window - intro;
+  if (tail <= 0) return intro;
+  return intro + ((t - intro) % tail);
 }
 
 /** Deep clone a pattern. */

@@ -1,4 +1,9 @@
-import { patternCycleMs } from '../domain';
+import {
+  patternIntroMs,
+  patternPeriodMs,
+  patternWindowMs,
+  previewPlayheadMs,
+} from '../domain';
 import { usePackStore } from '../store/packStore';
 import styles from './Transport.module.css';
 
@@ -6,9 +11,11 @@ const SPEEDS = [0.25, 0.5, 1, 1.5, 2] as const;
 
 export function Transport() {
   const { state, pattern, dispatch, setTimeMs, timeMsRef } = usePackStore();
-  const cycle = pattern ? patternCycleMs(pattern) : 2000;
+  const window = pattern ? patternWindowMs(pattern) : 2000;
+  const period = pattern ? patternPeriodMs(pattern) : 0;
+  const intro = pattern ? patternIntroMs(pattern) : 0;
   const t = state.timeMs;
-  const displayT = t % Math.max(cycle, 1);
+  const head = pattern ? previewPlayheadMs(t, pattern) : t % Math.max(window, 1);
 
   return (
     <div className={styles.bar}>
@@ -41,22 +48,25 @@ export function Transport() {
 
       <label className={styles.scrub}>
         <span className={styles.time}>
-          {(displayT / 1000).toFixed(2)}s
-          <span className={styles.cycle}> / {(cycle / 1000).toFixed(2)}s</span>
+          {(t / 1000).toFixed(2)}s
+          <span className={styles.cycle}>
+            {intro > 0
+              ? ` · ${(intro / 1000).toFixed(2)}s delay + ${(period / 1000).toFixed(2)}s loop`
+              : period > 0
+                ? ` / ${(period / 1000).toFixed(2)}s loop`
+                : ` / ${(window / 1000).toFixed(2)}s`}
+          </span>
         </span>
         <input
           type="range"
           min={0}
-          max={cycle}
+          max={window}
           step={1}
-          value={Math.min(displayT, cycle)}
+          value={Math.min(head, window)}
           onChange={(e) => {
             const v = Number(e.target.value);
-            // Preserve full timeline when scrubbing within one cycle window
-            const base = Math.floor(timeMsRef.current / cycle) * cycle;
-            const next = base + v;
-            timeMsRef.current = next;
-            setTimeMs(next);
+            timeMsRef.current = v;
+            setTimeMs(v);
             if (state.playing) {
               dispatch({ type: 'SET_PLAYING', playing: false });
             }

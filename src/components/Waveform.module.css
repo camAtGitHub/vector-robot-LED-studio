@@ -44,6 +44,18 @@
   inset: 0;
 }
 
+.loopStart {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #5a7a90;
+  box-shadow: 0 0 0 1px rgba(90, 122, 144, 0.35);
+  transform: translateX(-0.5px);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .playhead {
   position: absolute;
   top: 0;

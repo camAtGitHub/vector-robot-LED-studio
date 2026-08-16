@@ -162,6 +162,32 @@ describe('samplePattern — badCharger (only back pulses)', () => {
   });
 });
 
+describe('getCurrentLedColor — offset is one-shot, then period loops', () => {
+  it('does not wait the offset again after the first cycle', () => {
+    const led = {
+      onColor: [1, 1, 1, 1] as [number, number, number, number],
+      offColor: [0, 0, 0, 1] as [number, number, number, number],
+      onPeriod_ms: 100,
+      offPeriod_ms: 100,
+      transitionOnPeriod_ms: 100,
+      transitionOffPeriod_ms: 100,
+      offset_ms: 3000,
+    };
+    // Still in the one-shot wait
+    expect(isBlack(getCurrentLedColor(led, 1000, 0))).toBe(true);
+    // transOn 100 + on 100: mid on-hold at t=3150
+    const firstOn = getCurrentLedColor(led, 3150, 0);
+    expect(firstOn.r).toBe(255);
+    expect(firstOn.g).toBe(255);
+    expect(firstOn.b).toBe(255);
+    // Next loop starts immediately at 3400 — not another 3000ms wait
+    const secondOn = getCurrentLedColor(led, 3550, 0);
+    expect(secondOn.r).toBe(255);
+    expect(secondOn.g).toBe(255);
+    expect(secondOn.b).toBe(255);
+  });
+});
+
 describe('getCurrentLedColor — solid via 0xFFFF', () => {
   it('returns onColor when onPeriod_ms is 0xFFFF even if colors differ', () => {
     const led = {

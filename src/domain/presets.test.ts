@@ -3,12 +3,17 @@ import { SOLID_ON_PERIOD, samplePattern } from './player';
 import {
   applyPreset,
   patternCycleMs,
+  patternIntroMs,
+  patternPeriodMs,
+  patternWindowMs,
+  previewPlayheadMs,
   presetBlink,
   presetBreathe,
   presetChase,
   presetSingleLed,
   presetSolid,
 } from './presets';
+import type { Pattern, Rgba } from './types';
 import { brightnessPattern, hueShiftPattern } from './themeTools';
 import { packToProject, parseProjectJson, projectToPack, stringifyProject } from './project';
 
@@ -71,7 +76,9 @@ describe('presets', () => {
 
   it('patternCycleMs uses max LED total', () => {
     const p = presetBlink([1, 0, 0, 1], 100, 100);
-    expect(patternCycleMs(p)).toBe(200);
+    expect(patternPeriodMs(p)).toBe(200);
+    expect(patternCycleMs(p) % 200).toBe(0);
+    expect(patternCycleMs(p)).toBeGreaterThanOrEqual(200);
     expect(patternCycleMs(presetSolid())).toBe(2000);
   });
 
@@ -79,7 +86,71 @@ describe('presets', () => {
     // Chase-style: period 297, offsets 0 / 150 / 300 — back only lights after 300ms
     const p = presetBlink([1, 0, 0, 1], 99, 198);
     p.offset = [0, 150, 300];
-    expect(patternCycleMs(p)).toBe(297 + 300);
+    expect(patternIntroMs(p)).toBe(300);
+    expect(patternPeriodMs(p)).toBe(297);
+    expect(patternCycleMs(p)).toBeGreaterThanOrEqual(297 + 300);
+  });
+});
+
+/** One-shot offset then a short loop — the case that used to look like a 3.4s single flash. */
+function delayedWhiteFlash(): Pattern {
+  const white: Rgba = [1, 1, 1, 1];
+  const black: Rgba = [0, 0, 0, 1];
+  const n3 = (n: number): [number, number, number] => [n, n, n];
+  const c3 = (c: Rgba): [Rgba, Rgba, Rgba] => [
+    [...c] as Rgba,
+    [...c] as Rgba,
+    [...c] as Rgba,
+  ];
+  return {
+    onColors: c3(white),
+    offColors: c3(black),
+    onPeriod_ms: n3(100),
+    offPeriod_ms: n3(100),
+    transitionOnPeriod_ms: n3(100),
+    transitionOffPeriod_ms: n3(100),
+    offset: n3(3000),
+  };
+}
+
+describe('firmware timeline (offset once, then loop period)', () => {
+  const p = delayedWhiteFlash();
+
+  it('period is transOn+on+transOff+off — offset is not part of the loop', () => {
+    expect(patternPeriodMs(p)).toBe(400);
+  });
+
+  it('intro is the one-shot offset wait', () => {
+    expect(patternIntroMs(p)).toBe(3000);
+  });
+
+  it('window shows the wait plus enough loops that the repeat is visible', () => {
+    const window = patternWindowMs(p);
+    expect(window).toBeGreaterThanOrEqual(3000 + 400 * 2);
+    expect((window - 3000) % 400).toBe(0);
+  });
+
+  it('playhead does not restart the offset wait after the first loop', () => {
+    expect(previewPlayheadMs(0, p)).toBe(0);
+    expect(previewPlayheadMs(1500, p)).toBe(1500);
+    expect(previewPlayheadMs(3000, p)).toBe(3000);
+    expect(previewPlayheadMs(3100, p)).toBe(3100);
+    // Past first period: still in the looping tail, never back in the 0–3000 wait
+    const at3400 = previewPlayheadMs(3400, p);
+    expect(at3400).toBeGreaterThanOrEqual(3000);
+    expect(at3400).toBeLessThan(patternWindowMs(p));
+    const at6800 = previewPlayheadMs(6800, p);
+    expect(at6800).toBeGreaterThanOrEqual(3000);
+    expect(at6800).toBeLessThan(patternWindowMs(p));
+  });
+
+  it('playhead time samples the same phase as continuous robot time', () => {
+    for (const t of [0, 500, 3000, 3100, 3400, 3500, 4200, 8000]) {
+      const head = previewPlayheadMs(t, p);
+      const live = samplePattern(p, t);
+      const fromHead = samplePattern(p, head);
+      expect(fromHead).toEqual(live);
+    }
   });
 });
 
