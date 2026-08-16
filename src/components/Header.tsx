@@ -126,7 +126,7 @@ export function Header() {
                   }
                   await downloadPackAsZip(pack, undefined, { force });
                   dispatch({
-                    type: 'SET_STATUS',
+                    type: 'MARK_CLEAN',
                     status: `Exported robot zip (${Object.keys(pack.patterns).length} files)`,
                   });
                 })
@@ -141,7 +141,7 @@ export function Header() {
                 if (!pack) return;
                 downloadProject(pack);
                 dispatch({
-                  type: 'SET_STATUS',
+                  type: 'MARK_CLEAN',
                   status: 'Downloaded project (.bpld.json)',
                 });
               }}
@@ -174,7 +174,7 @@ export function Header() {
                 if (!pack) return;
                 downloadProject(pack);
                 dispatch({
-                  type: 'SET_STATUS',
+                  type: 'MARK_CLEAN',
                   status: 'Project saved (download)',
                 });
               }}

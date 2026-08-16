@@ -2,7 +2,7 @@
   "format": "vector-backpack-lights-designer",
   "version": 1,
   "name": "CamsCustomLEDPack",
-  "createdAt": "2026-08-16T12:40:33.030Z",
+  "createdAt": "2026-08-16T13:43:44.822Z",
   "patterns": {
     "alexaNotification.json": {
       "onColors": [
@@ -750,15 +750,15 @@
           1
         ],
         [
-          1,
-          1,
-          1,
+          0,
+          0,
+          0,
           1
         ],
         [
-          1,
-          1,
-          1,
+          0,
+          0,
+          0,
           1
         ]
       ],
@@ -784,23 +784,23 @@
       ],
       "onPeriod_ms": [
         500,
-        0,
-        0
+        500,
+        500
       ],
       "offPeriod_ms": [
         3000,
-        0,
-        0
+        3000,
+        3000
       ],
       "transitionOnPeriod_ms": [
         500,
-        0,
-        0
+        500,
+        500
       ],
       "transitionOffPeriod_ms": [
         500,
-        0,
-        0
+        500,
+        500
       ],
       "offset": [
         0,

@@ -74,7 +74,7 @@ function KeyboardShortcuts() {
         if (state.pack) {
           downloadProject(state.pack);
           dispatch({
-            type: 'SET_STATUS',
+            type: 'MARK_CLEAN',
             status: 'Project saved (download)',
           });
         }

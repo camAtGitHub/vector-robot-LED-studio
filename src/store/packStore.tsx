@@ -70,7 +70,8 @@ type Action =
   | { type: 'PASTE_PATTERN' }
   | { type: 'SET_CLIPBOARD'; pattern: Pattern | null }
   | { type: 'SET_FAVORITES'; favorites: Favorite[] }
-  | { type: 'CLEAR_UNDO' };
+  | { type: 'CLEAR_UNDO' }
+  | { type: 'MARK_CLEAN'; status?: string };
 
 function selectedMode(state: PackState): ModeDef | undefined {
   return getAllModes().find((m) => m.cladEvent === state.selectedCladEvent);
@@ -294,6 +295,14 @@ function reducer(state: PackState, action: Action): PackState {
       return { ...state, favorites: action.favorites };
     case 'CLEAR_UNDO':
       return { ...state, undoStack: [], redoStack: [] };
+    case 'MARK_CLEAN': {
+      if (!state.pack) return state;
+      return {
+        ...state,
+        pack: { ...state.pack, dirty: false },
+        status: action.status ?? state.status,
+      };
+    }
     default:
       return state;
   }
