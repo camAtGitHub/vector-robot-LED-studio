@@ -570,15 +570,17 @@ export function clonePackAsEditable(source: Pack, name?: string): Pack {
 export type BundledPackId = 'stock' | 'wireos' | 'example-cyan';
 
 /**
- * Load a bundled fixture pack from `/fixtures/packs/<id>/...` via fetch.
+ * Load a bundled fixture pack from `<base>fixtures/packs/<id>/...` via fetch.
  * Tries every expected relative path; 404s become missing-file warnings.
+ * Respects Vite `import.meta.env.BASE_URL` (e.g. `/backpack/`).
  */
 export async function loadBundledPack(
   packId: BundledPackId,
   options?: { name?: string; baseUrl?: string }
 ): Promise<ImportResult> {
-  const base =
-    (options?.baseUrl ?? `/fixtures/packs/${packId}`).replace(/\/+$/, '');
+  const base = (
+    options?.baseUrl ?? `${import.meta.env.BASE_URL}fixtures/packs/${packId}`
+  ).replace(/\/+$/, '');
   const modes = getAllModes();
   const entries: PackFileEntry[] = [];
 

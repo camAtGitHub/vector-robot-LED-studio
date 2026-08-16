@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/backpack/',
   plugins: [react()],
   test: {
     environment: 'node',

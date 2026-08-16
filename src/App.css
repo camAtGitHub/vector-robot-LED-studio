@@ -11,7 +11,8 @@
 .app-body {
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(200px, 260px) minmax(280px, 1fr) minmax(450px, 570px);
+  /* Side tracks size to panel width (default), not their max — max is optional via resize */
+  grid-template-columns: minmax(200px, max-content) minmax(280px, 1fr) minmax(450px, max-content);
   min-height: 0;
   overflow: hidden;
 }
@@ -27,6 +28,14 @@
     grid-template-columns: 1fr;
     grid-template-rows: minmax(220px, 40vh) auto auto;
     overflow: visible;
+  }
+
+  /* Full-width stack; drop desktop resize constraints */
+  .app-body > * {
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    resize: none;
   }
 }
 

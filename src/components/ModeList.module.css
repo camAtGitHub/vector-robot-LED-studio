@@ -1,7 +1,13 @@
 .panel {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  width: 260px;
+  min-width: 200px;
+  max-width: 390px; /* optional +50% via resize */
   min-height: 0;
+  overflow: auto;
+  resize: horizontal;
   background: #0e1219;
   border-right: 1px solid #2a3344;
 }
