@@ -12,7 +12,7 @@
   flex: 1;
   display: grid;
   /* Side tracks size to panel width (default), not their max — max is optional via resize */
-  grid-template-columns: minmax(200px, max-content) minmax(280px, 1fr) minmax(450px, max-content);
+  grid-template-columns: minmax(200px, max-content) minmax(280px, 1fr) minmax(480px, max-content);
   min-height: 0;
   overflow: hidden;
 }

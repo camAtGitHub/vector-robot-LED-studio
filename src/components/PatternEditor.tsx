@@ -495,8 +495,10 @@ function ColorCell({
             type="number"
             min={0}
             max={255}
+            size={3}
             value={rgb[ch]}
             title={ch.toUpperCase()}
+            aria-label={ch.toUpperCase()}
             onChange={(e) => {
               const v = Number(e.target.value);
               onRgb(
