@@ -7,6 +7,7 @@ import {
   patternPeriodMs,
   patternWindowMs,
   previewPlayheadMs,
+  previewTimerMs,
   presetBlink,
   presetBreathe,
   presetChase,
@@ -151,6 +152,41 @@ describe('firmware timeline (offset once, then loop period)', () => {
       const fromHead = samplePattern(p, head);
       expect(fromHead).toEqual(live);
     }
+  });
+
+  it('timer counts the offset, then wraps on the loop period', () => {
+    expect(previewTimerMs(0, p)).toEqual({
+      valueMs: 0,
+      spanMs: 3000,
+      phase: 'delay',
+    });
+    expect(previewTimerMs(1500, p)).toEqual({
+      valueMs: 1500,
+      spanMs: 3000,
+      phase: 'delay',
+    });
+    expect(previewTimerMs(3000, p)).toMatchObject({
+      valueMs: 0,
+      spanMs: 400,
+      phase: 'loop',
+    });
+    expect(previewTimerMs(3100, p)).toMatchObject({
+      valueMs: 100,
+      spanMs: 400,
+      phase: 'loop',
+    });
+    expect(previewTimerMs(3400, p)).toMatchObject({
+      valueMs: 0,
+      spanMs: 400,
+      phase: 'loop',
+    });
+    expect(previewTimerMs(3550, p)).toMatchObject({
+      valueMs: 150,
+      spanMs: 400,
+      phase: 'loop',
+    });
+    expect(previewTimerMs(8000, p).phase).toBe('loop');
+    expect(previewTimerMs(8000, p).valueMs).toBeLessThan(400);
   });
 });
 

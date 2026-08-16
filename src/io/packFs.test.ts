@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import {
   FULL_PACK_PATTERN_COUNT,
   getAllModes,
+  parseProjectJson,
   patternsEqual,
   SENTINEL_PATHS,
   type Pattern,
@@ -134,6 +135,26 @@ describe('import wireos', () => {
     expect(hasSentinels(pack)).toBe(true);
     expect(report.missingSentinels).toEqual([]);
     expect(report.ok).toBe(true);
+  });
+});
+
+describe('import cams-custom project', () => {
+  it('loads 32 patterns with 0 errors', () => {
+    const text = readFileSync(
+      join(fixturesRoot, 'cams-custom.bpld.json'),
+      'utf8'
+    );
+    const pack = parseProjectJson(text);
+    pack.name = "Cam's Custom Pack";
+    const report = validatePack(pack);
+
+    expect(pack.name).toBe("Cam's Custom Pack");
+    expect(Object.keys(pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
+    expect(report.patternCount).toBe(32);
+    expect(report.missingFiles).toEqual([]);
+    expect(report.schemaErrors).toEqual([]);
+    expect(report.ok).toBe(true);
+    expect(report.issues.filter((i) => i.severity === 'error')).toHaveLength(0);
   });
 });
 

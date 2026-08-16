@@ -215,6 +215,28 @@ export function previewPlayheadMs(timeMs: number, pattern: Pattern): number {
   return intro + ((t - intro) % tail);
 }
 
+/** Clock next to the scrubber: 0…intro during offset, then 0…period in the loop. */
+export function previewTimerMs(
+  timeMs: number,
+  pattern: Pattern
+): { valueMs: number; spanMs: number; phase: 'delay' | 'loop' } {
+  const head = previewPlayheadMs(timeMs, pattern);
+  const intro = patternIntroMs(pattern);
+  const period = patternPeriodMs(pattern);
+  if (intro > 0 && head < intro) {
+    return { valueMs: head, spanMs: intro, phase: 'delay' };
+  }
+  if (period > 0) {
+    return {
+      valueMs: (head - intro) % period,
+      spanMs: period,
+      phase: 'loop',
+    };
+  }
+  const window = patternWindowMs(pattern);
+  return { valueMs: head, spanMs: window, phase: 'loop' };
+}
+
 /** Deep clone a pattern. */
 export function clonePattern(pattern: Pattern): Pattern {
   return {

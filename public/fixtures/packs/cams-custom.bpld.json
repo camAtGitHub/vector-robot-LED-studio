@@ -1,0 +1,2152 @@
+{
+  "format": "vector-backpack-lights-designer",
+  "version": 1,
+  "name": "CamsCustomLEDPack",
+  "createdAt": "2026-08-16T12:40:33.030Z",
+  "patterns": {
+    "alexaNotification.json": {
+      "onColors": [
+        [
+          0.04,
+          0.32,
+          0.88,
+          1
+        ],
+        [
+          0.04,
+          0.32,
+          0.88,
+          1
+        ],
+        [
+          0.04,
+          0.32,
+          0.88,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offPeriod_ms": [
+        400,
+        400,
+        400
+      ],
+      "transitionOnPeriod_ms": [
+        1400,
+        1400,
+        1400
+      ],
+      "transitionOffPeriod_ms": [
+        1400,
+        1400,
+        1400
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "charging.json": {
+      "onColors": [
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0.41568627450980394,
+          0.788235294117647,
+          0.14901960784313725,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        600,
+        1200,
+        1800
+      ],
+      "offPeriod_ms": [
+        1200,
+        600,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "transitionOffPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offset": [
+        1200,
+        600,
+        0
+      ]
+    },
+    "chargingLowBatteryOverheated.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        600,
+        1200,
+        1800
+      ],
+      "offPeriod_ms": [
+        1200,
+        600,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "transitionOffPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offset": [
+        1200,
+        600,
+        0
+      ]
+    },
+    "chargingOverheated.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        600,
+        1200,
+        1800
+      ],
+      "offPeriod_ms": [
+        1200,
+        600,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "transitionOffPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offset": [
+        1200,
+        600,
+        0
+      ]
+    },
+    "danceToTheBeat.json": {
+      "onColors": [
+        [
+          0.6392156862745098,
+          0.058823529411764705,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0.09411764705882353,
+          1,
+          0.0784313725490196,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0.8117647058823529,
+          0.8196078431372549,
+          0.3607843137254902,
+          1
+        ],
+        [
+          0.8313725490196079,
+          0.403921568627451,
+          0.9411764705882353,
+          1
+        ],
+        [
+          1,
+          0.058823529411764705,
+          0.6862745098039216,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        0,
+        400,
+        400
+      ],
+      "offPeriod_ms": [
+        29,
+        400,
+        400
+      ],
+      "transitionOnPeriod_ms": [
+        129,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        300
+      ]
+    },
+    "meetVictor.json": {
+      "onColors": [
+        [
+          1,
+          0,
+          0.7843137254901961,
+          1
+        ],
+        [
+          1,
+          0,
+          0.7843137254901961,
+          1
+        ],
+        [
+          1,
+          0,
+          0.7843137254901961,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0.2980392156862745,
+          0,
+          1,
+          1
+        ],
+        [
+          0.2980392156862745,
+          0,
+          1,
+          1
+        ],
+        [
+          0.2980392156862745,
+          0,
+          1,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        200,
+        400,
+        800
+      ],
+      "offPeriod_ms": [
+        200,
+        400,
+        800
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "muted.json": {
+      "onColors": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "offColors": [
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "onPeriod_ms": [
+        4000,
+        0,
+        0
+      ],
+      "offPeriod_ms": [
+        2209,
+        380,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        1637,
+        1544,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        1861,
+        2461,
+        4000
+      ],
+      "offset": [
+        0,
+        2333,
+        2085
+      ]
+    },
+    "petting.json": {
+      "onColors": [
+        [
+          0,
+          0.85,
+          1,
+          1
+        ],
+        [
+          0,
+          0.85,
+          1,
+          1
+        ],
+        [
+          0,
+          0.85,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        70,
+        70,
+        70
+      ],
+      "offPeriod_ms": [
+        830,
+        830,
+        830
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        140,
+        280
+      ]
+    },
+    "idle_09.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        500,
+        500,
+        500
+      ],
+      "offPeriod_ms": [
+        3000,
+        3000,
+        3000
+      ],
+      "transitionOnPeriod_ms": [
+        500,
+        500,
+        500
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        1000,
+        2000
+      ]
+    },
+    "badCharger.json": {
+      "onColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        0,
+        0,
+        600
+      ],
+      "offPeriod_ms": [
+        0,
+        0,
+        600
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        300
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        300
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "badChargerOverheated.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        100,
+        100,
+        600
+      ],
+      "offPeriod_ms": [
+        600,
+        600,
+        600
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        300
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        300
+      ],
+      "offset": [
+        0,
+        0,
+        3684
+      ]
+    },
+    "off.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        500,
+        0,
+        0
+      ],
+      "offPeriod_ms": [
+        3000,
+        0,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        500,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        500,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "offline.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        400,
+        1000,
+        400
+      ],
+      "offPeriod_ms": [
+        2000,
+        400,
+        2000
+      ],
+      "transitionOnPeriod_ms": [
+        250,
+        1475,
+        250
+      ],
+      "transitionOffPeriod_ms": [
+        100,
+        55,
+        100
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "offline_off.json": {
+      "onColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "offPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "overheated.json": {
+      "onColors": [
+        [
+          1,
+          0.5098039215686274,
+          0.0196078431372549,
+          1
+        ],
+        [
+          1,
+          0.5294117647058824,
+          0,
+          1
+        ],
+        [
+          1,
+          0.5098039215686274,
+          0.0196078431372549,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0.9333333333333333,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        200,
+        100
+      ],
+      "offPeriod_ms": [
+        100,
+        200,
+        300
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/blue/spinner_blue_celebration.json": {
+      "onColors": [
+        [
+          0,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0,
+          0,
+          0.5,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        60,
+        120,
+        180
+      ],
+      "offPeriod_ms": [
+        120,
+        60,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        125,
+        30,
+        30
+      ],
+      "transitionOffPeriod_ms": [
+        30,
+        125,
+        30
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/blue/spinner_blue_hold_target.json": {
+      "onColors": [
+        [
+          0,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0,
+          0,
+          0.5,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "offPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/blue/spinner_blue_select_target.json": {
+      "onColors": [
+        [
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0,
+          0,
+          0.5,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offPeriod_ms": [
+        6000,
+        6000,
+        6000
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        1000,
+        1000,
+        1000
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/green/spinner_green_celebration.json": {
+      "onColors": [
+        [
+          0,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0,
+          0.5,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        60,
+        120,
+        180
+      ],
+      "offPeriod_ms": [
+        120,
+        60,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        125,
+        30,
+        30
+      ],
+      "transitionOffPeriod_ms": [
+        30,
+        125,
+        30
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/green/spinner_green_hold_target.json": {
+      "onColors": [
+        [
+          0,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0,
+          0.5,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "offPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/green/spinner_green_select_target.json": {
+      "onColors": [
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0,
+          0.5,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offPeriod_ms": [
+        6000,
+        6000,
+        6000
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        1000,
+        1000,
+        1000
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/purple/spinner_purple_celebration.json": {
+      "onColors": [
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        60,
+        120,
+        180
+      ],
+      "offPeriod_ms": [
+        120,
+        60,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        125,
+        30,
+        30
+      ],
+      "transitionOffPeriod_ms": [
+        30,
+        125,
+        30
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/purple/spinner_purple_hold_target.json": {
+      "onColors": [
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "offPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/purple/spinner_purple_select_target.json": {
+      "onColors": [
+        [
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0.5,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offPeriod_ms": [
+        6000,
+        6000,
+        6000
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        1000,
+        1000,
+        1000
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/red/spinner_red_celebration.json": {
+      "onColors": [
+        [
+          0.5,
+          0,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        60,
+        120,
+        180
+      ],
+      "offPeriod_ms": [
+        120,
+        60,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        125,
+        30,
+        30
+      ],
+      "transitionOffPeriod_ms": [
+        30,
+        125,
+        30
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/red/spinner_red_hold_target.json": {
+      "onColors": [
+        [
+          0.5,
+          0,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "offPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/red/spinner_red_select_target.json": {
+      "onColors": [
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0.5,
+          0,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offPeriod_ms": [
+        6000,
+        6000,
+        6000
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        1000,
+        1000,
+        1000
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/yellow/spinner_yellow_celebration.json": {
+      "onColors": [
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        60,
+        120,
+        180
+      ],
+      "offPeriod_ms": [
+        120,
+        60,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        125,
+        30,
+        30
+      ],
+      "transitionOffPeriod_ms": [
+        30,
+        125,
+        30
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/yellow/spinner_yellow_hold_target.json": {
+      "onColors": [
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        1,
+        1,
+        1
+      ],
+      "offPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "cubeSpinner/yellow/spinner_yellow_select_target.json": {
+      "onColors": [
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ],
+        [
+          0.5,
+          0.5,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        300,
+        300,
+        300
+      ],
+      "offPeriod_ms": [
+        6000,
+        6000,
+        6000
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        1000,
+        1000,
+        1000
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ]
+    },
+    "streaming.json": {
+      "onColors": [
+        [
+          0.95,
+          0.97,
+          1,
+          1
+        ],
+        [
+          0.95,
+          0.97,
+          1,
+          1
+        ],
+        [
+          0.95,
+          0.97,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        100,
+        100,
+        100
+      ],
+      "offPeriod_ms": [
+        200,
+        200,
+        200
+      ],
+      "transitionOnPeriod_ms": [
+        50,
+        50,
+        50
+      ],
+      "transitionOffPeriod_ms": [
+        50,
+        50,
+        50
+      ],
+      "offset": [
+        0,
+        100,
+        200
+      ]
+    },
+    "workingOnIt.json": {
+      "onColors": [
+        [
+          0,
+          0.85,
+          1,
+          1
+        ],
+        [
+          0,
+          0.85,
+          1,
+          1
+        ],
+        [
+          0,
+          0.85,
+          1,
+          1
+        ]
+      ],
+      "offColors": [
+        [
+          0.996078431372549,
+          0.34509803921568627,
+          0.8784313725490196,
+          1
+        ],
+        [
+          0.996078431372549,
+          0.34509803921568627,
+          0.8784313725490196,
+          1
+        ],
+        [
+          0.996078431372549,
+          0.34509803921568627,
+          0.8784313725490196,
+          1
+        ]
+      ],
+      "onPeriod_ms": [
+        250,
+        65535,
+        250
+      ],
+      "offPeriod_ms": [
+        250,
+        0,
+        250
+      ],
+      "transitionOnPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "transitionOffPeriod_ms": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        250
+      ]
+    }
+  }
+}

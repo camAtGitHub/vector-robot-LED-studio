@@ -80,6 +80,20 @@ export function Header() {
             >
               Load WireOS
             </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() =>
+                runBusy(async () => {
+                  applyImport(
+                    await loadBundledPack('cams-custom'),
+                    "Cam's Custom Pack"
+                  );
+                })
+              }
+            >
+              Load Cam's Custom Pack
+            </button>
             <button type="button" disabled={busy} onClick={() => folderRef.current?.click()}>
               Import folder…
             </button>

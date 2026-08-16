@@ -1,8 +1,7 @@
 import {
-  patternIntroMs,
-  patternPeriodMs,
   patternWindowMs,
   previewPlayheadMs,
+  previewTimerMs,
 } from '../domain';
 import { usePackStore } from '../store/packStore';
 import styles from './Transport.module.css';
@@ -12,10 +11,11 @@ const SPEEDS = [0.25, 0.5, 1, 1.5, 2] as const;
 export function Transport() {
   const { state, pattern, dispatch, setTimeMs, timeMsRef } = usePackStore();
   const window = pattern ? patternWindowMs(pattern) : 2000;
-  const period = pattern ? patternPeriodMs(pattern) : 0;
-  const intro = pattern ? patternIntroMs(pattern) : 0;
   const t = state.timeMs;
   const head = pattern ? previewPlayheadMs(t, pattern) : t % Math.max(window, 1);
+  const timer = pattern
+    ? previewTimerMs(t, pattern)
+    : { valueMs: head, spanMs: window, phase: 'loop' as const };
 
   return (
     <div className={styles.bar}>
@@ -48,13 +48,11 @@ export function Transport() {
 
       <label className={styles.scrub}>
         <span className={styles.time}>
-          {(t / 1000).toFixed(2)}s
+          {(timer.valueMs / 1000).toFixed(2)}s
           <span className={styles.cycle}>
-            {intro > 0
-              ? ` · ${(intro / 1000).toFixed(2)}s delay + ${(period / 1000).toFixed(2)}s loop`
-              : period > 0
-                ? ` / ${(period / 1000).toFixed(2)}s loop`
-                : ` / ${(window / 1000).toFixed(2)}s`}
+            {` / ${(timer.spanMs / 1000).toFixed(2)}s ${
+              timer.phase === 'delay' ? 'delay' : 'loop'
+            }`}
           </span>
         </span>
         <input

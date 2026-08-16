@@ -9,6 +9,7 @@ import {
   getAllModes,
   packRgba,
   parsePatternJson,
+  parseProjectJson,
   SchemaError,
   SENTINEL_PATHS,
   SOLID_ON_PERIOD,
@@ -560,17 +561,48 @@ function structuredClonePattern(pattern: Pattern): Pattern {
   };
 }
 
-export type BundledPackId = 'stock' | 'wireos' | 'example-cyan';
+export type BundledPackId = 'stock' | 'wireos' | 'example-cyan' | 'cams-custom';
+
+const BUNDLED_PACKS: Record<
+  BundledPackId,
+  { name: string; projectFile?: string }
+> = {
+  stock: { name: 'Stock Anki' },
+  wireos: { name: 'WireOS' },
+  'example-cyan': { name: 'Example cyan' },
+  'cams-custom': {
+    name: "Cam's Custom Pack",
+    projectFile: 'cams-custom.bpld.json',
+  },
+};
 
 /**
- * Load a bundled fixture pack from `<base>fixtures/packs/<id>/...` via fetch.
- * Tries every expected relative path; 404s become missing-file warnings.
+ * Load a bundled fixture pack via fetch.
+ * Folder packs: `<base>fixtures/packs/<id>/...` (404s become missing-file warnings).
+ * Project packs: `<base>fixtures/packs/<projectFile>`.
  * Respects Vite `import.meta.env.BASE_URL` (e.g. `/backpack/`).
  */
 export async function loadBundledPack(
   packId: BundledPackId,
   options?: { name?: string; baseUrl?: string }
 ): Promise<ImportResult> {
+  const meta = BUNDLED_PACKS[packId];
+  const name = options?.name ?? meta.name;
+
+  if (meta.projectFile) {
+    const dir = (
+      options?.baseUrl ?? `${import.meta.env.BASE_URL}fixtures/packs`
+    ).replace(/\/+$/, '');
+    const url = `${dir}/${meta.projectFile}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to load ${meta.projectFile}: ${res.status}`);
+    }
+    const pack = parseProjectJson(await res.text());
+    pack.name = name;
+    return { pack, report: validatePack(pack) };
+  }
+
   const base = (
     options?.baseUrl ?? `${import.meta.env.BASE_URL}fixtures/packs/${packId}`
   ).replace(/\/+$/, '');
@@ -591,15 +623,7 @@ export async function loadBundledPack(
     })
   );
 
-  const names: Record<BundledPackId, string> = {
-    stock: 'Stock Anki',
-    wireos: 'WireOS',
-    'example-cyan': 'Example cyan',
-  };
-
-  return importPackFromFiles(entries, {
-    name: options?.name ?? names[packId],
-  });
+  return importPackFromFiles(entries, { name });
 }
 
 /** True if both robot sentinels are present in the pack. */
