@@ -9,9 +9,29 @@ npm install
 npm run dev      # http://localhost:5173
 npm test
 npm run build
+npm run tauri dev    # optional desktop window
 ```
 
 No server, no robot connection required for design/preview.
+
+## Desktop builds
+
+Native installers (Linux AppImage/deb/rpm, Windows MSI/NSIS, macOS DMG) are
+produced by Tauri 2 in GitHub Actions and attached to a **draft** GitHub Release.
+
+```bash
+# local (needs Rust + platform webview deps — see https://v2.tauri.app/start/prerequisites/)
+npm install
+npm run tauri dev      # window + Vite on :5173
+npm run tauri build    # installers under src-tauri/target/release/bundle/
+```
+
+CI: push branch `release`, tag `app-v*`, or run the `publish` workflow.
+Version is `src-tauri/tauri.conf.json` → `version` (currently `0.1.0`).
+The action tags `app-v__VERSION__`. Publish the draft in the GitHub Releases UI.
+
+The web SPA is unchanged: `npm run build` still emits `/backpack/` assets.
+`tauri build` sets `TAURI_ENV_PLATFORM` so the same Vite config emits `/`.
 
 ## Layout
 
@@ -48,4 +68,4 @@ Favorites live in `localStorage` key `bpld.favorites.v1`.
 
 ## Stack
 
-Vite + React + TypeScript SPA (no Tauri/Electron in v1). Domain (`src/domain/`) is pure TS: schema, player, triggers, presets. Pack I/O in `src/io/packFs.ts`. Preview uses `samplePattern` / `getCurrentLedColor` (robot math). Export colors are **RGBA floats 0–1**, seven JSON keys only.
+Vite + React + TypeScript SPA (desktop wrap is Tauri 2; no Electron). Domain (`src/domain/`) is pure TS: schema, player, triggers, presets. Pack I/O in `src/io/packFs.ts`. Preview uses `samplePattern` / `getCurrentLedColor` (robot math). Export colors are **RGBA floats 0–1**, seven JSON keys only.
