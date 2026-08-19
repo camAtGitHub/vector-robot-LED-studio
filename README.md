@@ -2,6 +2,8 @@
 
 Offline web SPA for designing Vector **3-LED backpack light packs**. Preview uses the same animation math as the robot (`GetCurrentLEDcolor`). Export a robot-ready zip for `/data/data/customBackpackLights/`.
 
+![Studio preview](public/studio-preview.png)
+
 ## Quick start
 
 ```bash
