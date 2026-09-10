@@ -14,15 +14,30 @@ import {
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 
 describe('triggers', () => {
-  it('has 32 modes', () => {
+  it('has 34 modes', () => {
     expect(TRIGGER_MAP).toHaveLength(FULL_PACK_PATTERN_COUNT);
     expect(getAllModes()).toHaveLength(FULL_PACK_PATTERN_COUNT);
+    expect(FULL_PACK_PATTERN_COUNT).toBe(34);
   });
 
   it('maps LowBattery → badCharger.json', () => {
     const mode = getAllModes().find((m) => m.cladEvent === 'LowBattery');
     expect(mode?.relativePath).toBe('badCharger.json');
     expect(mode?.animName).toBe('badCharger');
+  });
+
+  it('maps CPU-hot events to pack-root json', () => {
+    const cpu = getAllModes().find((m) => m.cladEvent === 'CpuOverheated');
+    expect(cpu?.relativePath).toBe('cpuOverheated.json');
+    expect(cpu?.animName).toBe('cpuOverheated');
+    expect(cpu?.group).toBe('Critical');
+
+    const low = getAllModes().find(
+      (m) => m.cladEvent === 'LowBatteryCpuOverheated'
+    );
+    expect(low?.relativePath).toBe('lowBatteryCpuOverheated.json');
+    expect(low?.animName).toBe('lowBatteryCpuOverheated');
+    expect(low?.group).toBe('Critical');
   });
 
   it('maps spinners under cubeSpinner/<color>/', () => {

@@ -80,11 +80,11 @@ describe('path normalization', () => {
 });
 
 describe('import example-cyan', () => {
-  it('loads 32 patterns with 0 errors', () => {
+  it('loads 34 patterns with 0 errors', () => {
     const { pack, report } = loadFixturePack('example-cyan');
 
     expect(Object.keys(pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
-    expect(report.patternCount).toBe(32);
+    expect(report.patternCount).toBe(FULL_PACK_PATTERN_COUNT);
     expect(report.missingFiles).toEqual([]);
     expect(report.schemaErrors).toEqual([]);
     expect(report.ok).toBe(true);
@@ -108,12 +108,14 @@ describe('import example-cyan', () => {
 });
 
 describe('import wireos', () => {
-  it('loads 28 patterns and warns about 4 missing thermal files', () => {
+  it('loads 30 patterns and warns about 4 missing thermal files', () => {
     const { pack, report } = loadFixturePack('wireos');
 
-    expect(Object.keys(pack.patterns)).toHaveLength(28);
-    expect(report.patternCount).toBe(28);
+    expect(Object.keys(pack.patterns)).toHaveLength(30);
+    expect(report.patternCount).toBe(30);
     expect(report.schemaErrors).toEqual([]);
+    expect(pack.patterns['cpuOverheated.json']).toBeDefined();
+    expect(pack.patterns['lowBatteryCpuOverheated.json']).toBeDefined();
 
     const thermal = [
       'overheated.json',
@@ -139,7 +141,7 @@ describe('import wireos', () => {
 });
 
 describe('import cams-custom project', () => {
-  it('loads 32 patterns with 0 errors', () => {
+  it('loads 34 patterns with 0 errors', () => {
     const text = readFileSync(
       join(fixturesRoot, 'cams-custom.bpld.json'),
       'utf8'
@@ -150,7 +152,7 @@ describe('import cams-custom project', () => {
 
     expect(pack.name).toBe("Cam's Custom Pack");
     expect(Object.keys(pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
-    expect(report.patternCount).toBe(32);
+    expect(report.patternCount).toBe(FULL_PACK_PATTERN_COUNT);
     expect(report.missingFiles).toEqual([]);
     expect(report.schemaErrors).toEqual([]);
     expect(report.ok).toBe(true);
@@ -159,9 +161,11 @@ describe('import cams-custom project', () => {
 });
 
 describe('import stock', () => {
-  it('loads complete 32-file pack with sentinels', () => {
+  it('loads complete 34-file pack with sentinels', () => {
     const { pack, report } = loadFixturePack('stock');
-    expect(Object.keys(pack.patterns)).toHaveLength(32);
+    expect(Object.keys(pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
+    expect(pack.patterns['cpuOverheated.json']).toBeDefined();
+    expect(pack.patterns['lowBatteryCpuOverheated.json']).toBeDefined();
     expect(report.ok).toBe(true);
     expect(hasSentinels(pack)).toBe(true);
     for (const s of SENTINEL_PATHS) {
@@ -253,7 +257,7 @@ describe('import with prefixes and extras', () => {
       text: e.text,
     }));
     const { pack, report } = importPackFromFiles(nested, { name: 'nested' });
-    expect(Object.keys(pack.patterns)).toHaveLength(32);
+    expect(Object.keys(pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
     expect(report.ok).toBe(true);
   });
 
@@ -269,8 +273,8 @@ describe('import with prefixes and extras', () => {
       true
     );
     // Still has all patterns
-    expect(Object.keys(result.pack.patterns)).toHaveLength(32);
-    expect(Object.keys(pack.patterns)).toHaveLength(32);
+    expect(Object.keys(result.pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
+    expect(Object.keys(pack.patterns)).toHaveLength(FULL_PACK_PATTERN_COUNT);
   });
 
   it('reports schema errors per file without crashing', () => {

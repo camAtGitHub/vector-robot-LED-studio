@@ -87,7 +87,7 @@ export interface ExportZipOptions {
 // Path helpers
 // ---------------------------------------------------------------------------
 
-/** All expected relative paths for a complete 32-file pack. */
+/** All expected relative paths for a complete 34-file pack. */
 export function expectedRelativePaths(): string[] {
   return getAllModes().map((m) => m.relativePath);
 }
@@ -198,7 +198,7 @@ export function findTotalTimeZeroRisks(
 // ---------------------------------------------------------------------------
 
 /**
- * Validate a pack document against the 32-mode trigger map + sentinels.
+ * Validate a pack document against the 34-mode trigger map + sentinels.
  * `extraFiles` are paths that were present on import but not part of the map.
  */
 export function validatePack(

@@ -20,12 +20,14 @@ export const TRIGGER_MAP: TriggerMapEntry[] = [
   { CladEvent: 'Charging', AnimName: 'charging' },
   { CladEvent: 'ChargingLowBatteryOverheated', AnimName: 'chargingLowBatteryOverheated' },
   { CladEvent: 'ChargingOverheated', AnimName: 'chargingOverheated' },
+  { CladEvent: 'CpuOverheated', AnimName: 'cpuOverheated' },
   { CladEvent: 'DanceToTheBeat', AnimName: 'danceToTheBeat' },
   { CladEvent: 'MeetVictor', AnimName: 'meetVictor' },
   { CladEvent: 'Muted', AnimName: 'muted' },
   { CladEvent: 'Petting', AnimName: 'petting' },
   { CladEvent: 'Idle_09', AnimName: 'idle_09' },
   { CladEvent: 'LowBattery', AnimName: 'badCharger' },
+  { CladEvent: 'LowBatteryCpuOverheated', AnimName: 'lowBatteryCpuOverheated' },
   { CladEvent: 'LowBatteryOverheated', AnimName: 'badChargerOverheated' },
   { CladEvent: 'Off', AnimName: 'off' },
   { CladEvent: 'Offline', AnimName: 'offline' },
@@ -56,12 +58,14 @@ const LABELS: Record<string, string> = {
   Charging: 'Charging',
   ChargingLowBatteryOverheated: 'Charging + low battery + overheated',
   ChargingOverheated: 'Charging + overheated',
+  CpuOverheated: 'CPU overheated',
   DanceToTheBeat: 'Dance to the beat',
   MeetVictor: 'Meet Victor',
   Muted: 'Muted',
   Petting: 'Petting',
   Idle_09: 'Idle 09',
   LowBattery: 'Low battery',
+  LowBatteryCpuOverheated: 'Low battery + CPU overheated',
   LowBatteryOverheated: 'Low battery + overheated',
   Off: 'Off',
   Offline: 'Offline',
@@ -95,6 +99,8 @@ const GROUPS: Record<string, ModeGroup> = {
   LowBattery: 'Critical',
   LowBatteryOverheated: 'Critical',
   Overheated: 'Critical',
+  CpuOverheated: 'Critical',
+  LowBatteryCpuOverheated: 'Critical',
   Offline: 'Critical',
   Muted: 'Critical',
   AlexaNotification: 'Critical',
@@ -142,7 +148,7 @@ export function animNameToRelativePath(animName: string): string {
   return `${animName}.json`;
 }
 
-/** Build full ModeDef list (32 modes). */
+/** Build full ModeDef list (34 modes). */
 export function getAllModes(): ModeDef[] {
   return TRIGGER_MAP.map((entry) => {
     const { CladEvent, AnimName } = entry;
@@ -202,4 +208,4 @@ export const SENTINEL_PATHS = [
 ] as const;
 
 /** Expected full pack size (stock / custom export). */
-export const FULL_PACK_PATTERN_COUNT = 32;
+export const FULL_PACK_PATTERN_COUNT = 34;

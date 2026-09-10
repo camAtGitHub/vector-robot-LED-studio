@@ -1,3 +1,4 @@
+import { FULL_PACK_PATTERN_COUNT } from '../domain';
 import { hasSentinels } from '../io';
 import { usePackStore } from '../store/packStore';
 import styles from './ValidationBar.module.css';
@@ -19,7 +20,8 @@ export function ValidationBar() {
   const errors = report.issues.filter((i) => i.severity === 'error');
   const warnings = report.issues.filter((i) => i.severity === 'warning');
   const sentinels = hasSentinels(pack);
-  const ready = report.ok && sentinels && report.patternCount >= 32;
+  const ready =
+    report.ok && sentinels && report.patternCount >= FULL_PACK_PATTERN_COUNT;
 
   return (
     <footer className={styles.bar}>

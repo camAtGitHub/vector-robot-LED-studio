@@ -32,12 +32,43 @@ CI: push branch `release`, tag `app-v*`, or run the `publish` workflow.
 Version is `src-tauri/tauri.conf.json` → `version` (currently `0.1.0`).
 The action tags `app-v__VERSION__`. Publish the draft in the GitHub Releases UI.
 
-The web SPA is unchanged: `npm run build` still emits `/backpack/` assets.
-`tauri build` sets `TAURI_ENV_PLATFORM` so the same Vite config emits `/`.
+The web SPA is unchanged: `npm run build` still emits `/backpack/` assets
+(and a PWA service worker). `tauri build` sets `TAURI_ENV_PLATFORM` so the
+same Vite config emits `/` with no service worker.
+
+## Install as an app (PWA)
+
+`npm run build` emits an installable Progressive Web App. Upload `dist/` over
+**HTTPS**; Chrome and Edge show an install icon in the address bar, Safari uses
+Share → Add to Home Screen. The first visit caches the studio and bundled
+packs so it works offline. Later deploys update on the next visit.
+
+Default URLs stay under `/backpack/` (same as before):
+
+```bash
+npm run build
+# copy the contents of dist/ to https://your.server/backpack/
+```
+
+To host at the site root instead:
+
+```bash
+VITE_BASE=/ npm run build
+# copy the contents of dist/ to https://your.server/
+```
+
+Install requires HTTPS (localhost is allowed for testing). If the install
+prompt never appears, make sure `manifest.webmanifest` is served as
+`application/manifest+json` (or `application/json`). Apache picks that up
+from the included `.htaccess`; nginx needs
+`types { application/manifest+json webmanifest; }`.
+
+PWA is skipped during `tauri build` — no service worker inside the desktop
+webview.
 
 ## Layout
 
-- **Modes** — all 32 CladEvents (Critical / Behavior / Utility), search, copy/paste between modes
+- **Modes** — all 34 CladEvents (Critical / Behavior / Utility), search, copy/paste between modes
 - **Mock-up** — Front / Middle / Back LEDs driven by `samplePattern` at ~60 fps + transport + waveforms
 - **Editor** — colors (hex/RGB 0–255 UI → float 0–1 model), periods, presets, raw JSON, favorites
 - **Footer** — validation, sentinels, export readiness
